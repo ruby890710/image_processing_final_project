@@ -2,10 +2,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import java.awt.Color;
+
 
 public class Final {
     public static void main(String args[]) {
-        String rootPath = "D:/backup/NCHU/Advanced_Image_Processing/FinalProject/images/";
+        String rootPath = "D:/backup/NCHU/Advanced_Image_Processing/image_processing_final_project/FinalProject/images/";
         String original = rootPath + "cat.jpg";
         String grayScale = rootPath + "grayScale.jpg";
 
@@ -21,7 +23,7 @@ class ImageConverter {
 
     // output converted image
     void outputImage(BufferedImage convertedImage, String newFileName) {
-        String rootPath = "D:/backup/NCHU/Advanced_Image_Processing/FinalProject/images/";
+        String rootPath = "D:/backup/NCHU/Advanced_Image_Processing/image_processing_final_project/FinalProject/images/";
         try {
             File newFile = new File(rootPath + newFileName);
             ImageIO.write(convertedImage, "jpg", newFile);
@@ -43,20 +45,17 @@ class ImageConverter {
             // convert to grayscale
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
                 for (int x = 0; x < bufferedImage.getWidth(); x++) {
-                    // get pixel of the image
-                    int pixel = bufferedImage.getRGB(x, y);
+                    // get pixel color of the image
+                    Color color = new Color(bufferedImage.getRGB(x, y));
 
-                    int r = (pixel >> 16) & 0xff;
-                    int g = (pixel >> 8) & 0xff;
-                    int b = pixel & 0xff;
+                    int r = color.getRed();
+                    int g = color.getGreen();
+                    int b = color.getBlue();
 
                     // calculate the formula of gray scale
                     int gray = (int) (0.3 * r + 0.59 * g + 0.11 * b);
 
-                    // replace RGB value with gray scale value
-                    int newPixel = colorToRGB(255, gray, gray, gray);
-
-                    grayImage.setRGB(x, y, newPixel);
+                    grayImage.setRGB(x, y, new Color(gray, gray, gray).getRGB());
                 }
             }
             System.out.println("coverted to gray scale");
@@ -79,22 +78,19 @@ class ImageConverter {
             // convert gray scale to negative
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
                 for (int x = 0; x < bufferedImage.getWidth(); x++) {
-                    // get pixel of the image
-                    int pixel = bufferedImage.getRGB(x, y);
+                    // get pixel color of the image
+                    Color color = new Color(bufferedImage.getRGB(x, y));
 
-                    int r = (pixel >> 16) & 0xff;
-                    int g = (pixel >> 8) & 0xff;
-                    int b = pixel & 0xff;
+                    int r = color.getRed();
+                    int g = color.getGreen();
+                    int b = color.getBlue();
 
                     // subtract RGB from 255
                     r = 255 - r;
                     g = 255 - g;
                     b = 255 - b;
 
-                    // set new RGB value
-                    int newPixel = colorToRGB(255, r, g, b);
-
-                    grayImage.setRGB(x, y, newPixel);
+                    grayImage.setRGB(x, y, new Color(r, g, b).getRGB());
                 }
             }
             System.out.println("coverted to negative");
@@ -116,23 +112,19 @@ class ImageConverter {
             // convert gray scale to gamma value
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
                 for (int x = 0; x < bufferedImage.getWidth(); x++) {
-                    // get pixel of the image
-                    int pixel = bufferedImage.getRGB(x, y);
-                    int intensity = GetPixelIntensity(x, y);
+                    // get pixel color of the image
+                    Color color = new Color(bufferedImage.getRGB(x, y));
 
-                    int r = (pixel >> 16) & 0xff;
-                    int g = (pixel >> 8) & 0xff;
-                    int b = pixel & 0xff;
+                    int r = color.getRed();
+                    int g = color.getGreen();
+                    int b = color.getBlue();
 
                     // calculate the formula of gamma
-                    r = (int)Math.round(Math.pow((double)255 * (double)(Red(intensity) / 255), (double)1 / gammaValue));
-                    g = (int)Math.round(Math.pow((double)255 * (double)(Red(intensity) / 255), (double)1 / gammaValue));
-                    b = (int)Math.round(Math.pow((double)255 * (double)(Red(intensity) / 255), (double)1 / gammaValue));
+                    r = (int)Math.round(Math.pow((double)255 * (double)(r / 255), (double)1 / gammaValue));
+                    g = (int)Math.round(Math.pow((double)255 * (double)(g / 255), (double)1 / gammaValue));
+                    b = (int)Math.round(Math.pow((double)255 * (double)(b / 255), (double)1 / gammaValue));
 
-                    // set new RGB value
-                    int newPixel = colorToRGB(255, r, g, b);
-
-                    grayImage.setRGB(x, y, newPixel);
+                    grayImage.setRGB(x, y, new Color(r, g, b).getRGB());
                 }
             }
             System.out.println("coverted to gamma: " + gammaValue);
@@ -140,18 +132,6 @@ class ImageConverter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private int colorToRGB(int alpha, int red, int green, int blue) {
-        int newPixel = 0;
-        newPixel += alpha;
-        newPixel = newPixel << 8;
-        newPixel += red;
-        newPixel = newPixel << 8;
-        newPixel += green;
-        newPixel = newPixel << 8;
-        newPixel += blue;
-        return newPixel;
     }
 
 }
