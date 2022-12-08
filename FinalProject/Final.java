@@ -1,5 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import java.awt.Color;
@@ -14,12 +16,16 @@ public class Final {
         ImageConverter imageConverter = new ImageConverter();
         imageConverter.convertToGrayScale(original);
         imageConverter.convertGrayScaleToNegative(grayScale);
+        imageConverter.convertGrayScaleToGamma(grayScale, 0.2);
         imageConverter.convertGrayScaleToGamma(grayScale, 1.0);
+        imageConverter.convertGrayScaleToGamma(grayScale, 2.0);
 
     }
 }
 
 class ImageConverter {
+
+    ArrayList pixelsArrayList = new ArrayList<>();
 
     // output converted image
     void outputImage(BufferedImage convertedImage, String newFileName) {
@@ -109,22 +115,31 @@ class ImageConverter {
             BufferedImage grayImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(),
                     bufferedImage.getType());
 
+            // get the max and min gray scale values of the image
+            for (int y = 0; y < bufferedImage.getHeight(); y++) {
+                for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                    // get pixel color of the image
+                    Color color = new Color(bufferedImage.getRGB(x, y));
+
+                    // store each pixel (because the input image is gray scale, the gray scale values of RGB are the same.)
+                    pixelsArrayList.add(color.getRed());
+                }
+            }
+            int maxGrayScaleValue = (int) Collections.max(pixelsArrayList);
+            int minGrayScaleValue = (int) Collections.min(pixelsArrayList);
+
             // convert gray scale to gamma value
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
                 for (int x = 0; x < bufferedImage.getWidth(); x++) {
                     // get pixel color of the image
                     Color color = new Color(bufferedImage.getRGB(x, y));
 
-                    int r = color.getRed();
-                    int g = color.getGreen();
-                    int b = color.getBlue();
+                    int gray = color.getRed();
 
                     // calculate the formula of gamma
-                    r = (int)Math.round(Math.pow((double)255 * (double)(r / 255), (double)1 / gammaValue));
-                    g = (int)Math.round(Math.pow((double)255 * (double)(g / 255), (double)1 / gammaValue));
-                    b = (int)Math.round(Math.pow((double)255 * (double)(b / 255), (double)1 / gammaValue));
+                    gray = (int)Math.round((double)255 * Math.pow((double)(gray - minGrayScaleValue) / (maxGrayScaleValue - minGrayScaleValue), (double)gammaValue));
 
-                    grayImage.setRGB(x, y, new Color(r, g, b).getRGB());
+                    grayImage.setRGB(x, y, new Color(gray, gray, gray).getRGB());
                 }
             }
             System.out.println("coverted to gamma: " + gammaValue);
