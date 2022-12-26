@@ -22,6 +22,7 @@ public class Final {
         String gammaGreaterThan1 = rootPath + "Gamma_" + gammaValueGreaterThan1 + ".jpg";
 
         ImageConverter imageConverter = new ImageConverter();
+
         imageConverter.convertToGrayScale(original);
         imageConverter.convertGrayScaleToNegative(grayScale);
         imageConverter.convertGrayScaleToGamma(grayScale, gammaValueLessThan1);
@@ -38,7 +39,11 @@ public class Final {
 
 class ImageConverter {
 
-    // output converted image
+    /**
+     * 輸出轉換後的圖片
+     * @param convertedImage 經過轉換後的圖片
+     * @param newFileName 輸出圖片的名稱
+     */
     void outputImage(BufferedImage convertedImage, String newFileName) {
         String rootPath = "D:/backup/NCHU/Advanced_Image_Processing/image_processing_final_project/FinalProject/images/";
         try {
@@ -50,7 +55,10 @@ class ImageConverter {
         }
     }
 
-    // convert image to gray scale
+    /**
+     * 由原圖轉換為灰階
+     * @param filePath 欲轉換的圖片路徑
+     */
     void convertToGrayScale(String filePath) {
         String newFileName = "GrayScale.jpg";
         BufferedImage bufferedImage;
@@ -83,7 +91,10 @@ class ImageConverter {
 
     }
 
-    // convert gray scale image to negative
+    /**
+     * 由灰階圖轉換為負片
+     * @param filePath 欲轉換的圖片路徑
+     */
     void convertGrayScaleToNegative(String filePath) {
         String newFileName = "Negative.jpg";
         BufferedImage bufferedImage;
@@ -117,7 +128,11 @@ class ImageConverter {
         }
     }
 
-    // convert gray scale image to gamma value
+    /**
+     * 由灰階圖片轉換為 gamma (<1、=1、>1)
+     * @param filePath 欲轉換的圖片路徑
+     * @param gammaValue gamma值(型態為 double)
+     */
     void convertGrayScaleToGamma(String filePath, double gammaValue) {
         String newFileName = "Gamma_" + gammaValue + ".jpg";
         BufferedImage bufferedImage;
@@ -165,7 +180,12 @@ class ImageConverter {
         }
     }
 
-    // convert gamma image to salt and pepper
+    /**
+     * 由 gamma 圖 (gamma < 1) 轉換為胡椒鹽
+     * @param filePath 欲轉換的圖片路徑
+     * @param salt 撒鹽的比例
+     * @param pepper 灑胡椒的比例
+     */
     void convertGammaToSaltAndPepper(String filePath, double salt, double pepper) {
         String newFileName = "SaltAndPepper.jpg";
         BufferedImage bufferedImage;
@@ -197,7 +217,11 @@ class ImageConverter {
         }
     }
 
-    // convert salt and pepper image to n*n median filter
+    /**
+     * 由胡椒鹽雜訊圖轉換為 n*n 中值濾波器
+     * @param filePath 欲轉換的圖片路徑
+     * @param n
+     */
     void convertSaltAndPepperToMedianFilter(String filePath, int n) {
         String newFileName = n + "x" + n + " MedianFilter.jpg";
         BufferedImage bufferedImage;
@@ -239,7 +263,10 @@ class ImageConverter {
         }
     }
 
-    // convert gamma to laplacian (1st derivative)
+    /**
+     * 由 gamma 圖 (gamma = 1) 轉換為一階 laplacian
+     * @param filePath 欲轉換的圖片路徑
+     */
     void convertGammaToLaplacian(String filePath) {
         String newFileName = "Laplacian.jpg";
         BufferedImage bufferedImage;
@@ -284,7 +311,11 @@ class ImageConverter {
         }
     }
 
-    // convert laplacian image to n*n maximum filter
+    /**
+     * 由 laplacian 圖轉換為 n*n 最大值濾波器
+     * @param filePath
+     * @param n
+     */
     void convertLaplacianToMaximumFilter(String filePath, int n) {
         String newFileName = n + "x" + n + " MaximumFilter.jpg";
         BufferedImage bufferedImage;
@@ -327,7 +358,10 @@ class ImageConverter {
         }
     }
 
-    // convert gamma image to otsu binarization
+    /**
+     * 由 gamma 圖 (gamma > 1) 轉換為二值法 (otsu 為 threshold)
+     * @param filePath 欲轉換的圖片路徑
+     */
     void convertGammaToOtsuBinarization(String filePath) {
         String newFileName = "OtsuBinarization.jpg";
         BufferedImage bufferedImage;
@@ -347,7 +381,7 @@ class ImageConverter {
             for (int y = 0; y < bufferedImage.getHeight(); y++) {
                 for (int x = 0; x < bufferedImage.getWidth(); x++) {
                     index = y * width + x;
-                    inPixels[index]  = bufferedImage.getRGB(x, y);
+                    inPixels[index] = bufferedImage.getRGB(x, y);
                 }
             }
 
