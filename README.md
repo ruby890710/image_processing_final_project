@@ -71,6 +71,6 @@ uniform(0, 1) : ramdom variable uniformly distributed over[0, 1]
 
 把目標 pixel 的值取代成與 Laplacian 邊緣偵測內積的結果
 
-# [二值化 (Otsu 門檻值)](https://developer.aliyun.com/article/47939)
+## [二值化 (Otsu 門檻值)](https://developer.aliyun.com/article/47939)
 若 pixel 值 > otsu threshold，pixel 灰階值 = 255(白) <br>
 若 pixel 值 <= otsu threshold，pixel 灰階值 = 0(黑)
