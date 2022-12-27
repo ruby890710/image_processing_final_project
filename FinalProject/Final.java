@@ -23,7 +23,7 @@ public class Final {
 
         ImageConverter imageConverter = new ImageConverter();
 
-        imageConverter.convertToGrayScale(original);
+        imageConverter.convertOriginalToGrayScale(original);
         imageConverter.convertGrayScaleToNegative(grayScale);
         imageConverter.convertGrayScaleToGamma(grayScale, gammaValueLessThan1);
         imageConverter.convertGrayScaleToGamma(grayScale, 1.0);
@@ -41,8 +41,9 @@ class ImageConverter {
 
     /**
      * 輸出轉換後的圖片
+     *
      * @param convertedImage 經過轉換後的圖片
-     * @param newFileName 輸出圖片的名稱
+     * @param newFileName    輸出圖片的名稱
      */
     void outputImage(BufferedImage convertedImage, String newFileName) {
         String rootPath = "D:/backup/NCHU/Advanced_Image_Processing/image_processing_final_project/FinalProject/images/";
@@ -57,9 +58,10 @@ class ImageConverter {
 
     /**
      * 由原圖轉換為灰階
+     *
      * @param filePath 欲轉換的圖片路徑
      */
-    void convertToGrayScale(String filePath) {
+    void convertOriginalToGrayScale(String filePath) {
         String newFileName = "GrayScale.jpg";
         BufferedImage bufferedImage;
         try {
@@ -93,6 +95,7 @@ class ImageConverter {
 
     /**
      * 由灰階圖轉換為負片
+     *
      * @param filePath 欲轉換的圖片路徑
      */
     void convertGrayScaleToNegative(String filePath) {
@@ -130,7 +133,8 @@ class ImageConverter {
 
     /**
      * 由灰階圖片轉換為 gamma (<1、=1、>1)
-     * @param filePath 欲轉換的圖片路徑
+     *
+     * @param filePath   欲轉換的圖片路徑
      * @param gammaValue gamma值(型態為 double)
      */
     void convertGrayScaleToGamma(String filePath, double gammaValue) {
@@ -182,9 +186,10 @@ class ImageConverter {
 
     /**
      * 由 gamma 圖 (gamma < 1) 轉換為胡椒鹽
+     *
      * @param filePath 欲轉換的圖片路徑
-     * @param salt 撒鹽的比例
-     * @param pepper 灑胡椒的比例
+     * @param salt     撒鹽的比例
+     * @param pepper   灑胡椒的比例
      */
     void convertGammaToSaltAndPepper(String filePath, double salt, double pepper) {
         String newFileName = "SaltAndPepper.jpg";
@@ -219,6 +224,7 @@ class ImageConverter {
 
     /**
      * 由胡椒鹽雜訊圖轉換為 n*n 中值濾波器
+     *
      * @param filePath 欲轉換的圖片路徑
      * @param n
      */
@@ -265,6 +271,7 @@ class ImageConverter {
 
     /**
      * 由 gamma 圖 (gamma = 1) 轉換為一階 laplacian
+     *
      * @param filePath 欲轉換的圖片路徑
      */
     void convertGammaToLaplacian(String filePath) {
@@ -313,6 +320,7 @@ class ImageConverter {
 
     /**
      * 由 laplacian 圖轉換為 n*n 最大值濾波器
+     *
      * @param filePath
      * @param n
      */
@@ -360,6 +368,7 @@ class ImageConverter {
 
     /**
      * 由 gamma 圖 (gamma > 1) 轉換為二值法 (otsu 為 threshold)
+     *
      * @param filePath 欲轉換的圖片路徑
      */
     void convertGammaToOtsuBinarization(String filePath) {
@@ -439,6 +448,7 @@ class ImageConverter {
                     min = variances[m];
                 }
             }
+            System.out.println("final min variances : " + min);
             System.out.println("final otsu threshold value : " + threshold);
             for (int row = 0; row < height; row++) {
                 for (int col = 0; col < width; col++) {
