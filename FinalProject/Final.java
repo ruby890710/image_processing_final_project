@@ -270,7 +270,7 @@ class ImageConverter {
     }
 
     /**
-     * 由 gamma 圖 (gamma = 1) 轉換為一階 laplacian
+     * 由 gamma 圖 (gamma = 1) 轉換為二階 laplacian
      *
      * @param filePath 欲轉換的圖片路徑
      */
@@ -282,7 +282,7 @@ class ImageConverter {
             BufferedImage gammaImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(),
                     bufferedImage.getType());
 
-            // convert gamma to laplacian (1st derivative)
+            // convert gamma to laplacian (2nd derivative)
             for (int y = 1; y < bufferedImage.getHeight() - 1; y++) {
                 for (int x = 1; x < bufferedImage.getWidth() - 1; x++) {
                     Color c00 = new Color(bufferedImage.getRGB(x - 1, y - 1));

@@ -52,14 +52,6 @@
 ## [Salt and Pepper](https://www.cnblogs.com/oomusou/archive/2006/12/21/598795.html)
 **convertGammaToSaltAndPepper**
 如果我們考慮 8 位圖像，胡椒鹽雜訊會隨機出現一定數量的像素，分為兩個極端，即 0 或 255。
-Salt and Pepper 公式：
-:::info 
-I(nim, i, j) = 0 if uniform(0, 1) < salt
-I(nim, i, j) = 255 if uniform(0, 1) > 1 - pepper
-I(nim, i, j) = I(im, i, j) otherwise
-uniform(0, 1) : ramdom variable uniformly distributed over[0, 1]
-:::
-
 1. 設定 salt 和 pepper 比例
 2. 隨機取 0~1 間的值
     1. 若小於 salt，設定 pixel 灰階值為 0 (black)
@@ -72,7 +64,7 @@ uniform(0, 1) : ramdom variable uniformly distributed over[0, 1]
 ## [3 × 3 中值濾波器](https://github.com/praserocking/MedianFilter/blob/master/MedianFilter.java)
 **convertSaltAndPepperToMedianFilter**
 1. 取得目標 pixel 以及周圍 8 個 pixel 的顏色。共 9 個 pixel
-2. 將每個像素點的 R, G, B 值分離出來放到 array 裡，把 R, G, B 的 array 進行排序，得到 array 的中值
+2. 將每個像素點的 RGB 值分離出來放到 array 裡，把 RGB 的 array 進行排序，得到 array 的中值
 3. 9 個 pixel 灰階值取中值。將目標 pixel 設定為中值並 repeat
 4. 轉換前後：
     ![](https://i.imgur.com/F3bJ4fU.jpg)
@@ -92,7 +84,7 @@ uniform(0, 1) : ramdom variable uniformly distributed over[0, 1]
     -  二階3*3
         ![](https://i.imgur.com/Y83lkSm.png)
 1. 取得目標 pixel 以及周圍 8 個 pixel 的顏色。共 9 個 pixel
-2. 將每個像素點的 R, G, B 值透過一階 Laplacian 矩陣計算出 RGB
+2. 將每個像素點的 R, G, B 值透過二階 Laplacian 矩陣計算出 RGB
 3. 將所有灰階值皆設定介於 0~255 間 (<0 設為 0，>255 設為 255)
 4. 把目標 pixel 的值取代成與 Laplacian 邊緣偵測內積的結果並 repeat
 5. 轉換前後：
