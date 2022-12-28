@@ -110,7 +110,7 @@ uniform(0, 1) : ramdom variable uniformly distributed over[0, 1]
 **convertGammaToOtsuBinarization**
 1. 取得每 pixel 的灰階值
 2. 取得直方圖
-3. 找出 otsu 門檻值 (擁有最小組間變異數的灰階值)
+3. 找出 otsu 門檻值 (擁有最小組內變異數的灰階值)
     :::info
     -  若 pixel 值 > otsu threshold，pixel 灰階值 = 255(白)
     -  若 pixel 值 <= otsu threshold，pixel 灰階值 = 0(黑)
