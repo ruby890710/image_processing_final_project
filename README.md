@@ -1,7 +1,5 @@
-###### tags: `高等影像處理` `課程` `碩一上`
-# 高等影像處理期末專案
+# Image Processing
 
-## 期末專案題目
 ![](https://i.imgur.com/OAnONgD.png)
 
 ## 原圖
